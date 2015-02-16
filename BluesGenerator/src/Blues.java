@@ -1,4 +1,7 @@
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -133,7 +136,7 @@ public class Blues {
         last.add("McKinley");
         last.add("Johnson");
         
-        author = RandomAuthor();
+        author = randomAuthor();
     }
     
     public Blues(String author) {
@@ -247,7 +250,7 @@ public class Blues {
         this.author = author;
     }
 
-    private String RandomAuthor() {
+    private String randomAuthor() {
         
         String name = new String();
         
@@ -265,12 +268,59 @@ public class Blues {
         return author;
     }
     
-    public static void main(String[] args) {
+    public String generateSong() {
+        String song = new String();
+        
+//        if(rand.nextInt(5) == 0) {
+            song += "Well I " + verbs.get(rand.nextInt(verbs.size())) + " a " +
+                    nouns.get(rand.nextInt(nouns.size())) + " in Boston";
+            
+            song += "\n" + song + "\n";
+            
+            song += "I " + verbs.get(rand.nextInt(verbs.size())) + " to " +
+                    verbs.get(rand.nextInt(verbs.size())) + " a " +
+                    adjectives.get(rand.nextInt(adjectives.size())) + " " +
+                    nouns.get(rand.nextInt(nouns.size()));
+//        }
+        return song;
+    }
+    
+    public static void main(String[] args) throws IOException {
+        
+        System.out.println("Have you shot a man in Memphis? (Y/N)");
+        
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String answer = reader.readLine();
+        
+        if(answer.equalsIgnoreCase("y")) {
+            System.out.println("Have a burbon on me." + "\n");
+        }
+        else if(answer.equalsIgnoreCase("n")) {
+            System.out.println("You do not have the blues.");
+            System.exit(0);
+        }
+        else {
+            System.out.println("Well you can't read, you may have the blues yet...");
+        }
+
+         
         
         if(args.length == 0) {
             Blues song = new Blues();
-            System.out.println(song.getAuthor());
+            System.out.println("Name: " + song.getAuthor() + "\n");
+            System.out.println(song.generateSong());
         }
-        
+        else {
+            String name = args[0].toLowerCase();
+            
+            if(name.contains("sierra") || name.contains("sequoia") || 
+                name.contains("auburn") || name.contains("rainbow")) {
+            System.out.println("You cannot sing the Blues.");
+            }
+            else {
+            Blues song = new Blues(args[0]);
+            song.generateSong();
+            }
+        }
     }
 }
